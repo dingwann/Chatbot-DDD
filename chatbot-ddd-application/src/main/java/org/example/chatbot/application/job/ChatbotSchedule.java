@@ -40,7 +40,7 @@ public class ChatbotSchedule {
     @Resource
     private IXiaomiService xiaomiService;
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void run() {
         // 随机休眠避免风控
         if (new Random().nextBoolean()) {
@@ -48,12 +48,12 @@ public class ChatbotSchedule {
             return;
         }
 
-/*        // 凌晨后不再回答
+        // 凌晨后不再回答
         GregorianCalendar calendar = new GregorianCalendar();
         if (calendar.get(GregorianCalendar.HOUR_OF_DAY) > 22 || calendar.get(GregorianCalendar.HOUR_OF_DAY) < 7) {
             log.info("当前时间：{} 点，打烊时间不再回答", calendar.get(GregorianCalendar.HOUR_OF_DAY));
             return;
-        }*/
+        }
 
         try {
             UnAnsweredQuestionsAggregate unAnsweredQuestionsAggregate = zsxqApi.queryUnAnsweredQuestionsTopicId(groupId, cookie);
