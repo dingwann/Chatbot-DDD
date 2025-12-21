@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2025/12/20
  */
 @SpringBootApplication
-@ComponentScan("org.example.chatbot.domain")
+@ComponentScan("org.example.chatbot")
 public class ApiApplication {
 
     public static void main(String[] args) {
