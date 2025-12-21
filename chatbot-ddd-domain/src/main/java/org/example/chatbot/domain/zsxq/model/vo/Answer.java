@@ -1,0 +1,28 @@
+package org.example.chatbot.domain.zsxq.model.vo;
+
+/**
+ * @author wangcai
+ * @description 知识星球响应类
+ * @date 2025/12/21
+ */
+public class Answer {
+    private Owner owner;
+
+    private String text;
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Owner getOwner() {
+        return this.owner;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+}

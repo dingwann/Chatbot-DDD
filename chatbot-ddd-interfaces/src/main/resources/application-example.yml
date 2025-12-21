@@ -1,3 +1,7 @@
 # 更改为自己的知识星球cookie后将该文件改为：application-dev.yml
 zsxq:
   cookie: <input your cookie>
+  groupId: <input your groupId>
+
+xiaomi:
+  api-key: <input your api-key>

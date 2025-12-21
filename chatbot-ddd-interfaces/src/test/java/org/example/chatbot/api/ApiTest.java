@@ -1,8 +1,5 @@
 package org.example.chatbot.api;
 
-import com.alibaba.fastjson2.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author wangcai
@@ -31,6 +27,9 @@ public class ApiTest {
 
     @Value("${zsxq.cookie}")
     private String cookie;
+
+    @Value("${xiaomi.api-key}")
+    private String apiKey;
 
     @Test
     public void queryUnanswered() throws IOException {
@@ -81,6 +80,49 @@ public class ApiTest {
         }
     }
 
+    @Test
+    public void xiaomiMIMOTest() throws IOException {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost("https://api.xiaomimimo.com/v1/chat/completions");
+        post.addHeader("api-key", apiKey);
+        post.addHeader("Content-Type", "application/json");
 
+        String reqJson = """
+                {
+                    "model": "mimo-v2-flash",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": "You are MiMo, an AI assistant developed by Xiaomi. Today is date: Tuesday, December 16, 2025. Your knowledge cutoff date is December 2024. Answer in Chinese"
+                        },
+                        {
+                            "role": "user",
+                            "content": "请问你是什么模型？"
+                        }
+                    ],
+                    "max_completion_tokens": 1024,
+                    "temperature": 0.3,
+                    "top_p": 0.95,
+                    "stream": false,
+                    "stop": null,
+                    "frequency_penalty": 0,
+                    "presence_penalty": 0,
+                    "thinking": {
+                        "type": "disabled"
+                    }
+                }
+                """;
+        StringEntity stringEntity = new StringEntity(
+                reqJson, ContentType.create("text/json", "UTF-8"));
+        post.setEntity(stringEntity);
+        CloseableHttpResponse execute = httpClient.execute(post);
+        if (execute.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            String response = EntityUtils.toString(execute.getEntity());
+            System.out.println(response);
+        } else {
+            int statusCode = execute.getStatusLine().getStatusCode();
+            System.out.println("请求失败，状态码：" + statusCode);
+        }
+    }
 
 }

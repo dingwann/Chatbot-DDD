@@ -2,6 +2,7 @@ package org.example.chatbot.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author wangcai
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2025/12/20
  */
 @SpringBootApplication
+@ComponentScan("org.example.chatbot.domain")
 public class ApiApplication {
 
     public static void main(String[] args) {
